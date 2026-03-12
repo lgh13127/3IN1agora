@@ -224,25 +224,29 @@
             background: #F57C00;  /* 悬停加深 */
         }
         
+        /* 返回主页面按钮样式 - 加粗，与主按钮一致 */
         .back-btn {
             background: #6c757d;
             color: white;
-            padding: 8px 14px;
+            padding: 14px 18px;
             border-radius: 8px;
             border: none;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 8px;
             width: 100%;
+            min-height: 50px;
             margin-bottom: 8px;
             flex-shrink: 0;
         }
-        
+        .back-btn i {
+            font-size: 20px;
+        }
         .back-btn:hover {
             background: #5a6268;
         }
@@ -697,10 +701,19 @@
             }
             .main-btn {
                 padding: 12px 16px;
-                font-size: 14px;      /* 移动端字体稍小但保持可读 */
+                font-size: 14px;
                 min-height: 48px;
             }
             .main-btn i {
+                font-size: 18px;
+            }
+            /* 返回按钮移动端适配 */
+            .back-btn {
+                padding: 12px 16px;
+                font-size: 14px;
+                min-height: 48px;
+            }
+            .back-btn i {
                 font-size: 18px;
             }
             .call-page .button-group {
@@ -711,11 +724,6 @@
             }
             .members-list {
                 grid-template-columns: 1fr;
-            }
-            .back-btn {
-                padding: 6px 12px;
-                font-size: 12px;
-                margin-bottom: 6px;
             }
             .volume-control {
                 padding: 8px 12px;
