@@ -27,7 +27,7 @@
         .page {
             display: none;
             flex: 1;
-            min-height: 0; /* 允许flex子项缩小 */
+            min-height: 0;
         }
         
         .page.active {
@@ -155,19 +155,23 @@
         }
         
         .main-btn {
-            padding: 12px 16px;
+            padding: 14px 18px;  /* 稍微增加内边距以适应更大字体 */
             border: none;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 16px;      /* 默认字体调大 */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             width: 100%;
-            min-height: 45px;
+            min-height: 50px;     /* 增加最小高度 */
+        }
+        
+        .main-btn i {
+            font-size: 20px;       /* 图标调大 */
         }
         
         .main-btn:active {
@@ -211,13 +215,13 @@
             background: linear-gradient(to right, #43a047, #1b5e20);
         }
         
-        .tally-call-btn {
-            background: linear-gradient(to right, #FF9800, #F57C00);
-            color: white;
+        /* 进入返送按钮专用橙色 (覆盖.call-btn的渐变) */
+        #goToReturnBtn {
+            background: #FF9800;  /* 纯橙色 */
+            background-image: none;
         }
-        
-        .tally-call-btn:hover {
-            background: linear-gradient(to right, #FB8C00, #EF6C00);
+        #goToReturnBtn:hover {
+            background: #F57C00;  /* 悬停加深 */
         }
         
         .back-btn {
@@ -309,7 +313,7 @@
             margin-top: 12px;
             flex: 1;
             overflow-y: auto;
-            min-height: 0; /* 允许flex子项缩小 */
+            min-height: 0;
         }
         
         .members-header {
@@ -522,185 +526,204 @@
             min-height: 0;
         }
         
-        /* TALLY+通话页面样式 */
-        .tally-call-page-content {
+        /* 视频返送页面样式 (基于return.html移植) */
+        .return-page-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             min-height: 0;
-            gap: 6px;
+            gap: 10px;
         }
-        
-        .tally-call-controls-container {
+        .video-container {
+            margin: 0;
+            flex: 1;
             min-height: 0;
             display: flex;
             flex-direction: column;
-            background: #f8f9fa;
-            border-radius: 8px;
+        }
+        .video-box {
+            width: 100%;
+            position: relative;
+            background: #1a1a1a;
+            border-radius: 12px;
             overflow: hidden;
-            padding: 8px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             flex-shrink: 0;
         }
-        
-        .tally-call-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex: 1;
-            justify-content: center;
-        }
-        
-        .tally-call-buttons {
-            display: flex;
-            flex-direction: row; /* 确保两个按钮在一排显示 */
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-        
-        .tally-call-buttons .main-btn {
-            flex: 1;
-            min-height: 38px;
-            padding: 8px 10px;
-            font-size: 12px;
-            border-radius: 6px;
-        }
-        
-        .tally-call-status {
-            text-align: center;
-            margin: 4px 0;
-            padding: 5px;
-            border-radius: 5px;
-            background: #f8f9fa;
-            font-weight: 600;
-            font-size: 10px;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .tally-call-status.connected {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .tally-call-status.disconnected {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .tally-call-display-container {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            flex-direction: column;
-            background: #f8f9fa;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .tally-call-display {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            position: relative;
-        }
-        
-        .tally-call-frame {
-            flex: 1;
+        .video-box video {
             width: 100%;
             height: 100%;
-            border: none;
-            background: white;
-            min-height: 0;
-            display: block; /* 确保iframe显示 */
+            object-fit: cover;
+            background: #2c3e50;
+            transform: none;
         }
+        .video-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+        .no-video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 18px;
+            background: #2c3e50;
+        }
+        .fullscreen-btn, .exit-fullscreen-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 16px;
+            transition: background 0.2s;
+            min-width: auto;
+        }
+        .fullscreen-btn:hover, .exit-fullscreen-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .exit-fullscreen-btn {
+            display: none;
+        }
+        .volume-control {
+            margin: 0;
+            padding: 10px 15px;
+            background: #e8f4fd;
+            border-radius: 12px;
+            border-left: 4px solid #f39c12;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        .volume-control label {
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .volume-control input[type=range] {
+            flex: 1;
+            min-width: 200px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #d0d0d0;
+            border-radius: 2px;
+            outline: none;
+        }
+        .volume-control input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #f39c12;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .volume-control span {
+            min-width: 45px;
+            font-weight: 600;
+            color: #f39c12;
+            font-size: 14px;
+            flex-shrink: 0;
+            text-align: right;
+        }
+        .members-info {
+            background: white;
+            border-radius: 15px;
+            padding: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .members-info h3 {
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 14px;
+        }
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e74c3c;
+        }
+        .status-dot.connected {
+            background: #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         
-        /* 移动端优化 - 针对手机端特别优化 */
+        /* 移动端优化 */
         @media (max-width: 768px) {
             body {
                 padding: 6px;
             }
-            
             .secondary-page-container {
                 padding: 10px;
                 border-radius: 10px;
             }
-            
             .main-page-container {
                 padding: 16px;
                 border-radius: 12px;
             }
-            
             .header h1 {
                 font-size: 18px;
             }
-            
             .header p {
                 font-size: 11px;
             }
-            
             .control-panel {
                 padding: 12px;
             }
-            
             .main-btn {
-                padding: 10px 14px;
-                font-size: 12px;
-                min-height: 42px;
+                padding: 12px 16px;
+                font-size: 14px;      /* 移动端字体稍小但保持可读 */
+                min-height: 48px;
             }
-            
-            /* 页面3的特别优化 */
-            #tally-call-page .header h1 {
-                font-size: 16px;
-                margin-bottom: 0;
+            .main-btn i {
+                font-size: 18px;
             }
-            
-            #tally-call-page .tally-call-controls-container {
-                padding: 6px;
-                margin-bottom: 4px;
-            }
-            
-            #tally-call-page .tally-call-buttons {
-                gap: 6px;
-            }
-            
-            #tally-call-page .tally-call-buttons .main-btn {
-                min-height: 36px;
-                padding: 6px 8px;
-                font-size: 11px;
-            }
-            
-            #tally-call-page .tally-call-status {
-                font-size: 9px;
-                padding: 4px;
-                margin: 3px 0;
-            }
-            
-            #tally-call-page .tally-call-display-container {
-                border-radius: 8px;
-            }
-            
-            /* 其他页面的优化 */
             .call-page .button-group {
                 flex-direction: column;
             }
-            
             .call-page .main-btn {
                 min-width: 100%;
             }
-            
             .members-list {
                 grid-template-columns: 1fr;
             }
-            
             .back-btn {
                 padding: 6px 12px;
                 font-size: 12px;
                 margin-bottom: 6px;
+            }
+            .volume-control {
+                padding: 8px 12px;
+                gap: 8px;
+                flex-wrap: nowrap;
+            }
+            .volume-control input[type=range] {
+                min-width: 100px;
             }
         }
         
@@ -708,58 +731,27 @@
             .input-group {
                 flex-direction: row;
             }
-            
             .input-field {
                 flex: 1;
             }
-            
             .button-group {
                 flex-direction: row;
             }
-            
             .main-btn {
                 width: auto;
                 flex: 1;
             }
-            
             .members-list {
                 grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             }
         }
         
-        /* 手机横屏优化 */
-        @media (max-width: 768px) and (orientation: landscape) {
-            #tally-call-page .tally-call-controls-container {
-                flex-direction: row;
-                align-items: center;
-            }
-            
-            #tally-call-page .tally-call-controls {
-                flex-direction: row;
-                align-items: center;
-                gap: 8px;
-            }
-            
-            #tally-call-page .tally-call-buttons {
-                flex-direction: row;
-                margin-bottom: 0;
-                flex: 1;
-            }
-            
-            #tally-call-page .tally-call-status {
-                flex: 1;
-                margin: 0;
-            }
-        }
-        
-        /* 防止长按选中文本 */
         * {
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
-        
         input, textarea {
             -webkit-user-select: text;
             -moz-user-select: text;
@@ -774,52 +766,65 @@
     <div id="main-page" class="page active">
         <div class="main-page-container">
             <div class="header">
-                <h1>🎤 演播智联-通话系统</h1>
+                <h1>🎤 演播智联</h1>
                 <p>选择功能模块</p>
             </div>
             
+            <!-- 音频通话模块 -->
             <div class="control-panel">
+                <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;"><i class="fas fa-microphone"></i> 音频通话</h3>
                 <div class="input-group">
                     <div class="input-field">
                         <label for="channelName"><i class="fas fa-hashtag"></i> 频道名称</label>
-                        <input type="text" id="channelName" placeholder="如：meeting-room-1" autocomplete="off">
+                        <input type="text" id="channelName" placeholder="audio" autocomplete="on" value="audio">
                     </div>
-                    
                     <div class="input-field">
                         <label for="tokenInput"><i class="fas fa-key"></i> 鉴权令牌</label>
-                        <input type="text" id="tokenInput" placeholder="输入临时Token" autocomplete="off">
-                        <div class="token-hint">
-                            <i class="fas fa-info-circle"></i>
-                            <span>管理员下发的临时Token</span>
-                        </div>
+                        <input type="text" id="tokenInput" placeholder="管理员下发的临时Token" autocomplete="off">
                     </div>
                 </div>
-                
-                <div class="input-group">
-                    <div class="input-field">
-                        <label for="urlInput"><i class="fas fa-link"></i> TALLY网址</label>
-                        <input type="text" id="urlInput" placeholder="https://example.com/tally" autocomplete="off">
-                        <div class="token-hint">
-                            <i class="fas fa-info-circle"></i>
-                            <span>输入TALLY显示网页地址</span>
-                        </div>
-                    </div>
-                </div>
-                
                 <div class="button-group">
                     <button class="main-btn call-btn" id="joinCallBtn">
                         <i class="fas fa-phone-alt"></i>
                         <span>加入通话</span>
                     </button>
-                    
+                </div>
+            </div>
+
+            <!-- 新增：TALLY显示独立模块，样式与音频通话/视频返送一致 -->
+            <div class="control-panel">
+                <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;"><i class="fas fa-desktop"></i> TALLY显示</h3>
+                <div class="input-group">
+                    <div class="input-field">
+                        
+                        <input type="text" id="urlInput" placeholder="输入TALLY显示地址" autocomplete="off">
+                    </div>
+                </div>
+                <div class="button-group">
                     <button class="main-btn tally-btn" id="showTallyBtn">
                         <i class="fas fa-desktop"></i>
                         <span>TALLY显示</span>
                     </button>
-                    
-                    <button class="main-btn tally-call-btn" id="tallyCallBtn">
-                        <i class="fas fa-broadcast-tower"></i>
-                        <span>TALLY+通话</span>
+                </div>
+            </div>
+
+            <!-- 视频返送独立模块（包含频道名称、鉴权码输入框和进入按钮） -->
+            <div class="control-panel" style="margin-top: 20px;">
+                <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;"><i class="fas fa-video"></i> 视频返送</h3>
+                <div class="input-group">
+                    <div class="input-field">
+                        <label for="returnChannelName"><i class="fas fa-hashtag"></i> 频道名称</label>
+                        <input type="text" id="returnChannelName" placeholder="如：video-room" autocomplete="off" value="video">
+                    </div>
+                    <div class="input-field">
+                        <label for="returnToken"><i class="fas fa-key"></i> 鉴权令牌</label>
+                        <input type="text" id="returnToken" placeholder="管理员下发的临时Token" autocomplete="on">
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="main-btn call-btn" id="goToReturnBtn">
+                        <i class="fas fa-play"></i>
+                        <span>进入返送</span>
                     </button>
                 </div>
             </div>
@@ -830,7 +835,7 @@
         </div>
     </div>
     
-    <!-- 二级页面1：通话页面 -->
+    <!-- 二级页面1：通话页面（标题已改为“音频通话”） -->
     <div id="call-page" class="page">
         <div class="secondary-page-container">
             <button class="back-btn" onclick="goBack()">
@@ -839,7 +844,7 @@
             </button>
             
             <div class="header">
-                <h1>🎤 通话频道</h1>
+                <h1>🎤 音频通话</h1>
                 <p>频道：<span id="currentChannel"></span></p>
             </div>
             
@@ -894,7 +899,7 @@
             
             <div class="header">
                 <h1>📺 TALLY显示</h1>
-                <p>显示外部TALLY网页</p>
+                
             </div>
             
             <div class="tally-page-content">
@@ -908,9 +913,9 @@
             </div>
         </div>
     </div>
-    
-    <!-- 二级页面3：TALLY+通话页面 -->
-    <div id="tally-call-page" class="page">
+
+    <!-- 二级页面4：视频返送页面（整合return.html功能） -->
+    <div id="return-page" class="page">
         <div class="secondary-page-container">
             <button class="back-btn" onclick="goBack()">
                 <i class="fas fa-arrow-left"></i>
@@ -918,37 +923,60 @@
             </button>
             
             <div class="header">
-                <h1 style="font-size: 16px;">📡 TALLY+通话</h1>
-                <!-- 删除了副标题 -->
+                <h1>📺 视频返送</h1>
             </div>
-            
-            <div class="tally-call-page-content">
-                <!-- 通话控制区域（极小高度） -->
-                <div class="tally-call-controls-container">
-                    <div class="tally-call-controls">
-                        <div class="tally-call-buttons">
-                            <button class="main-btn call-btn" id="tallyCallToggle">
-                                <i class="fas fa-phone-alt"></i>
-                                <span id="tallyCallText">加入通话</span>
-                            </button>
-                            <button class="main-btn mic-btn" id="tallyMicToggle" disabled>
-                                <i class="fas fa-microphone"></i>
-                                <span id="tallyMicText">开启话筒</span>
-                            </button>
-                        </div>
-                        
-                        <div id="tallyCallStatus" class="tally-call-status">
-                            <i class="fas fa-circle-notch fa-spin"></i>
-                            <span id="tallyStatusText">正在连接...</span>
-                        </div>
+
+            <!-- 状态栏 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="status-dot" id="returnStatusDot"></div>
+                    <span id="returnStatusText">就绪</span>
+                </div>
+                <div>
+                    <i class="fas fa-users"></i> 在线: <span id="returnOnlineCount">0</span>
+                </div>
+            </div>
+
+            <!-- 控制面板（仅按钮组，无输入框） -->
+            <div class="control-panel" style="margin-bottom: 10px; padding: 12px;">
+                <div class="button-group" style="margin-top: 0;">
+                    <button class="main-btn call-btn" id="returnCallToggle">
+                        <i class="fas fa-phone-alt"></i>
+                        <span id="returnCallText">加入频道</span>
+                    </button>
+                    <button class="main-btn remote-btn" id="returnRemoteToggle" disabled>
+                        <i class="fas fa-eye"></i>
+                        <span id="returnRemoteText">开启接收</span>
+                    </button>
+                </div>
+                <div id="returnCallStatus" class="call-status" style="margin-top: 8px;">
+                    <i class="fas fa-circle-notch fa-spin"></i> <span id="returnCallStatusText">准备就绪</span>
+                </div>
+            </div>
+
+            <!-- 视频显示区域 -->
+            <div class="return-page-content">
+                <div class="video-container">
+                    <div class="video-box" id="returnVideoBox">
+                        <video id="returnVideo" autoplay playsinline></video>
+                        <div class="video-label">返送</div>
+                        <div class="no-video-placeholder" id="returnPlaceholder" style="display: flex;">接收已关闭</div>
+                        <button class="fullscreen-btn" id="returnEnterFullscreenBtn" title="全屏"><i class="fas fa-expand"></i></button>
+                        <button class="exit-fullscreen-btn" id="returnExitFullscreenBtn" title="退出全屏"><i class="fas fa-compress"></i></button>
                     </div>
                 </div>
-                
-                <!-- TALLY显示区域（主要区域） -->
-                <div class="tally-call-display-container">
-                    <div class="tally-call-display">
-                        <!-- iframe将在这里动态创建 -->
-                    </div>
+
+                <!-- 音量控制 -->
+                <div class="volume-control">
+                    <label><i class="fas fa-volume-up"></i> 音量</label>
+                    <input type="range" id="returnVolumeSlider" min="0" max="100" value="50">
+                    <span id="returnVolumeValue">50%</span>
+                </div>
+
+                <!-- 在线成员简况 -->
+                <div class="members-info">
+                    <h3><i class="fas fa-user-friends"></i> 当前在线</h3>
+                    <p><span id="returnOnlineCount2">0</span> 人在频道中</p>
                 </div>
             </div>
             
@@ -970,51 +998,34 @@
                 iframe: null,
                 isInitialized: false
             },
-            tallyCallState: null  // 新增：TALLY+通话页面状态
+            returnPageState: null
         };
         
         // 页面切换函数
         function showPage(pageId) {
-            // 隐藏所有页面
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            
-            // 显示目标页面
             const targetPage = document.getElementById(pageId);
             targetPage.classList.add('active');
-            
-            // 更新当前页面记录
             pageManager.currentPage = pageId;
             
             // 页面特定逻辑
             if (pageId === 'call-page' && pageManager.callPageState && pageManager.callPageState.isInCall) {
-                // 通话页面已处于通话中，更新显示
                 setTimeout(() => {
                     updateCallPageDisplay();
                     updateMembersDisplay();
                 }, 100);
             }
-            
-            // TALLY+通话页面特定逻辑
-            if (pageId === 'tally-call-page') {
-                // 如果已经有TALLY网址，确保iframe存在
-                if (pageManager.tallyCallState && pageManager.tallyCallState.tallyUrl) {
+            if (pageId === 'return-page') {
+                if (pageManager.returnPageState && pageManager.returnPageState.isInCall) {
                     setTimeout(() => {
-                        ensureTallyCallIframe(pageManager.tallyCallState.tallyUrl);
-                    }, 50);
-                }
-                
-                // 如果已处于通话中，更新显示
-                if (pageManager.tallyCallState && pageManager.tallyCallState.isInCall) {
-                    setTimeout(() => {
-                        updateTallyCallPageDisplay();
+                        updateReturnPageDisplay();
                     }, 100);
                 }
             }
         }
         
-        // 返回主页面
         function goBack() {
             showPage('main-page');
         }
@@ -1022,15 +1033,8 @@
         // 创建或更新TALLY页面iframe
         function setupTallyIframe(url) {
             const container = document.querySelector('#tally-page .tally-container');
-            if (!container) {
-                console.error('找不到TALLY容器');
-                return;
-            }
-            
-            // 清空容器
+            if (!container) return;
             container.innerHTML = '';
-            
-            // 创建iframe
             const iframe = document.createElement('iframe');
             iframe.className = 'tally-frame';
             iframe.src = url;
@@ -1038,124 +1042,33 @@
             iframe.allow = "autoplay; encrypted-media; gyroscope; accelerometer";
             iframe.allowFullscreen = true;
             iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals');
-            
-            // 设置iframe样式确保全屏
             iframe.style.width = '100%';
             iframe.style.height = '100%';
             iframe.style.minHeight = '0';
             iframe.style.flex = '1';
-            
-            // 添加到容器
             container.appendChild(iframe);
-            
-            // 保存状态
             pageManager.tallyState.url = url;
             pageManager.tallyState.iframe = iframe;
             pageManager.tallyState.isInitialized = true;
-            
-            console.log('TALLY iframe已创建，URL:', url);
-            
-            // 监听iframe加载完成
-            iframe.onload = function() {
-                console.log('TALLY iframe加载完成');
-            };
-            
             iframe.onerror = function(e) {
-                console.error('TALLY iframe加载失败:', e);
-                alert('TALLY页面加载失败，请检查网址是否正确');
-            };
-        }
-        
-        // 确保TALLY+通话页面iframe存在
-        function ensureTallyCallIframe(url) {
-            const container = document.querySelector('#tally-call-page .tally-call-display');
-            if (!container) {
-                console.error('找不到TALLY+通话容器');
-                return;
-            }
-            
-            // 检查URL是否变化
-            const urlChanged = !pageManager.tallyCallState || pageManager.tallyCallState.tallyUrl !== url;
-            
-            // 如果URL未变化且已有iframe，直接返回
-            if (!urlChanged && pageManager.tallyCallState && pageManager.tallyCallState.tallyIframe) {
-                // 确保iframe在容器中
-                if (container && !container.contains(pageManager.tallyCallState.tallyIframe)) {
-                    container.innerHTML = '';
-                    container.appendChild(pageManager.tallyCallState.tallyIframe);
-                }
-                console.log('TALLY+通话 iframe已存在，URL未变化，直接复用');
-                return;
-            }
-            
-            // 清空容器
-            container.innerHTML = '';
-            
-            // 创建iframe
-            const iframe = document.createElement('iframe');
-            iframe.className = 'tally-call-frame';
-            iframe.src = url;
-            iframe.frameborder = "0";
-            iframe.allow = "autoplay; encrypted-media; gyroscope; accelerometer";
-            iframe.allowFullscreen = true;
-            iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms allow-modals');
-            
-            // 设置iframe样式确保全屏
-            iframe.style.width = '100%';
-            iframe.style.height = '100%';
-            iframe.style.minHeight = '0';
-            iframe.style.flex = '1';
-            iframe.style.display = 'block'; // 确保iframe显示
-            
-            // 添加到容器
-            container.appendChild(iframe);
-            
-            // 保存状态
-            if (pageManager.tallyCallState) {
-                pageManager.tallyCallState.tallyUrl = url;
-                pageManager.tallyCallState.tallyIframe = iframe;
-                pageManager.tallyCallState.isTallyInitialized = true;
-            }
-            
-            console.log('TALLY+通话 iframe已创建，URL:', url);
-            
-            // 监听iframe加载完成
-            iframe.onload = function() {
-                console.log('TALLY+通话 iframe加载完成');
-            };
-            
-            iframe.onerror = function(e) {
-                console.error('TALLY+通话 iframe加载失败:', e);
                 alert('TALLY页面加载失败，请检查网址是否正确');
             };
         }
         
         // 初始化主页面按钮事件
         document.addEventListener('DOMContentLoaded', function() {
-            // 一级页面按钮事件
             document.getElementById('joinCallBtn').addEventListener('click', async function() {
                 const channelName = document.getElementById('channelName').value.trim();
                 const token = document.getElementById('tokenInput').value.trim();
-                
-                if (!channelName) {
-                    alert('请输入频道名称！');
-                    return;
-                }
-                
-                // 设置当前频道名称
+                if (!channelName) { alert('请输入频道名称！'); return; }
                 document.getElementById('currentChannel').textContent = channelName;
-                
-                // 切换到通话页面
                 showPage('call-page');
-                
-                // 如果当前没有通话状态或者不在通话中，则加入频道
                 if (!pageManager.callPageState || !pageManager.callPageState.isInCall) {
                     try {
                         await joinChannelFromMainPage(channelName, token);
                     } catch (error) {
                         console.error('加入频道失败:', error);
                         alert(`加入频道失败: ${error.message}`);
-                        // 回到主页面
                         showPage('main-page');
                     }
                 }
@@ -1163,35 +1076,14 @@
             
             document.getElementById('showTallyBtn').addEventListener('click', function() {
                 const url = document.getElementById('urlInput').value.trim();
-                
-                if (!url) {
-                    alert('请输入TALLY网址！');
-                    return;
-                }
-                
-                // 验证URL格式
-                try {
-                    new URL(url);
-                } catch (e) {
-                    alert('请输入有效的网址（包含http://或https://）');
-                    return;
-                }
-                
-                // 检查URL是否变化
+                if (!url) { alert('请输入TALLY网址！'); return; }
+                try { new URL(url); } catch (e) { alert('请输入有效的网址（包含http://或https://）'); return; }
                 const urlChanged = pageManager.tallyState.url !== url;
-                
-                // 保存TALLY网址
                 pageManager.tallyState.url = url;
-                
-                // 切换到TALLY显示页面
                 showPage('tally-page');
-                
-                // 创建或更新iframe
                 if (!pageManager.tallyState.isInitialized || urlChanged) {
-                    // 创建新的iframe（URL变化或首次创建）
                     setupTallyIframe(url);
                 } else {
-                    // URL未变化，但需要确保iframe在正确的位置
                     const container = document.querySelector('#tally-page .tally-container');
                     const iframe = pageManager.tallyState.iframe;
                     if (container && iframe && !container.contains(iframe)) {
@@ -1200,60 +1092,34 @@
                     }
                 }
             });
-            
-            document.getElementById('tallyCallBtn').addEventListener('click', async function() {
-                const channelName = document.getElementById('channelName').value.trim();
-                const token = document.getElementById('tokenInput').value.trim();
-                const url = document.getElementById('urlInput').value.trim();
-                
-                if (!channelName) {
-                    alert('请输入频道名称！');
+
+            // 视频返送按钮事件：切换到return-page并自动加入频道
+            document.getElementById('goToReturnBtn').addEventListener('click', async function() {
+                const channel = document.getElementById('returnChannelName').value.trim();
+                const token = document.getElementById('returnToken').value.trim();
+                if (!channel) {
+                    alert('请输入频道名称');
                     return;
                 }
-                
-                if (!url) {
-                    alert('请输入TALLY网址！');
-                    return;
-                }
-                
-                // 验证URL格式
-                try {
-                    new URL(url);
-                } catch (e) {
-                    alert('请输入有效的网址（包含http://或https://）');
-                    return;
-                }
-                
-                // 切换到TALLY+通话页面
-                showPage('tally-call-page');
-                
-                // 设置TALLY显示
-                ensureTallyCallIframe(url);
-                
-                // 如果当前没有通话状态或者不在通话中，则加入频道
-                if (!pageManager.tallyCallState || !pageManager.tallyCallState.isInCall) {
+                showPage('return-page');
+                if (!pageManager.returnPageState || !pageManager.returnPageState.isInCall) {
                     try {
-                        await joinTallyCallChannel(channelName, token);
+                        await joinReturnChannel(channel, token || null);
                     } catch (error) {
-                        console.error('加入频道失败:', error);
-                        alert(`加入频道失败: ${error.message}`);
-                        // 回到主页面
+                        console.error('加入返送频道失败:', error);
+                        alert(`加入返送频道失败: ${error.message}`);
                         showPage('main-page');
                     }
                 }
             });
             
-            // 初始化通话页面
             initCallPage();
-            
-            // 初始化TALLY+通话页面
-            initTallyCallPage();
+            initReturnPage();
             
             console.log('页面初始化完成');
         });
         
         // ========== 通话页面功能（二级页面1） ==========
-        // 初始化通话页面状态
         if (!pageManager.callPageState) {
             pageManager.callPageState = {
                 rtcClient: null,
@@ -1269,117 +1135,54 @@
         
         const APP_ID = "4531524ecba946fd868fc547c6d269d7";
         
-        // 初始化通话页面
         function initCallPage() {
-            // 绑定通话页面的事件监听器
             const callToggleBtn = document.getElementById('callToggle');
             const micToggleBtn = document.getElementById('micToggle');
-            
-            if (callToggleBtn) {
-                callToggleBtn.addEventListener('click', toggleCall);
-            }
-            
-            if (micToggleBtn) {
-                micToggleBtn.addEventListener('click', toggleMicrophone);
-            }
-            
-            console.log('通话页面初始化完成');
+            if (callToggleBtn) callToggleBtn.addEventListener('click', toggleCall);
+            if (micToggleBtn) micToggleBtn.addEventListener('click', toggleMicrophone);
         }
         
-        // 从主页面加入频道
         async function joinChannelFromMainPage(channelName, token = null) {
-            // 检测麦克风权限
             const hasMicPerm = await checkMicPermission();
-            if (!hasMicPerm) {
-                throw new Error('麦克风权限被拒绝');
-            }
-            
+            if (!hasMicPerm) throw new Error('麦克风权限被拒绝');
             try {
-                // 更新通话状态显示
                 updateCallStatus('connecting', '正在加入频道...');
-                
-                // 初始化声网客户端
                 await initRtcClient();
-                
-                // 创建麦克风音频轨道
                 const audioTrack = await createMicrophoneAudioTrack();
-                
-                if (!audioTrack || !audioTrack.play) {
-                    throw new Error("音频轨道创建失败");
-                }
-                
+                if (!audioTrack || !audioTrack.play) throw new Error("音频轨道创建失败");
                 pageManager.callPageState.localAudioTrack = audioTrack;
-                console.log(`麦克风音频轨道创建成功`);
-                
-                // 加入频道
                 const uid = await pageManager.callPageState.rtcClient.join(APP_ID, channelName, token || null);
-                console.log(`加入频道【${channelName}】成功，UID: ${uid}`);
-                
                 pageManager.callPageState.currentUid = uid;
                 pageManager.callPageState.currentChannelName = channelName;
-                
-                // 添加本地成员到列表
                 addMember(uid, true, pageManager.callPageState.localAudioTrack);
-                
-                // 发布音频
                 await pageManager.callPageState.rtcClient.publish([pageManager.callPageState.localAudioTrack]);
                 pageManager.callPageState.isPublished = true;
-                console.log("本地音频发布成功");
-                
-                // 默认关闭话筒
                 pageManager.callPageState.isMicrophoneMuted = true;
                 pageManager.callPageState.localAudioTrack.setEnabled(false);
-                
-                // 设置通话状态
                 pageManager.callPageState.isInCall = true;
-                
-                // 更新本地成员状态
                 const localMember = Array.from(pageManager.callPageState.members.values()).find(m => m.isLocal);
-                if (localMember) {
-                    localMember.isMuted = true;
-                }
-                
-                // 更新通话页面显示
+                if (localMember) localMember.isMuted = true;
                 updateCallPageDisplay();
                 updateMembersDisplay();
-                
-                // 更新状态显示
                 updateCallStatus('connected', `已加入频道：${channelName} | UID：${uid}`);
-                
                 return uid;
-                
             } catch (error) {
-                console.error("加入/发布失败:", error);
-                
-                // 清理资源
-                if (pageManager.callPageState.localAudioTrack) {
-                    pageManager.callPageState.localAudioTrack.close();
-                    pageManager.callPageState.localAudioTrack = null;
-                }
-                
-                if (pageManager.callPageState.rtcClient) {
-                    pageManager.callPageState.rtcClient = null;
-                }
-                
+                if (pageManager.callPageState.localAudioTrack) pageManager.callPageState.localAudioTrack.close();
+                pageManager.callPageState.rtcClient = null;
                 pageManager.callPageState.isPublished = false;
                 pageManager.callPageState.isInCall = false;
                 pageManager.callPageState.members.clear();
-                
                 updateCallPageDisplay();
                 updateCallStatus('error', `加入频道失败：${error.message}`);
-                
                 throw error;
             }
         }
         
-        // 更新通话页面显示
         function updateCallPageDisplay() {
-            // 更新按钮状态
             const callToggleBtn = document.getElementById('callToggle');
             const micToggleBtn = document.getElementById('micToggle');
             const callTextSpan = document.getElementById('callText');
             const micTextSpan = document.getElementById('micText');
-            
             if (callToggleBtn && callTextSpan) {
                 if (pageManager.callPageState.isInCall) {
                     callToggleBtn.classList.add('in-call');
@@ -1391,7 +1194,6 @@
                     callToggleBtn.querySelector('i').className = 'fas fa-phone-alt';
                 }
             }
-            
             if (micToggleBtn && micTextSpan) {
                 micToggleBtn.disabled = !pageManager.callPageState.isInCall;
                 if (pageManager.callPageState.isMicrophoneMuted) {
@@ -1406,724 +1208,480 @@
             }
         }
         
-        // 初始化客户端
         async function initRtcClient() {
             if (pageManager.callPageState.rtcClient) return;
-            
             try {
                 const rtcClient = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
                 pageManager.callPageState.rtcClient = rtcClient;
-                
-                // 监听远程用户加入
                 rtcClient.on("user-published", async (user, mediaType) => {
                     try {
                         await rtcClient.subscribe(user, mediaType);
                         if (mediaType === "audio") {
                             const remoteAudioTrack = user.audioTrack;
                             remoteAudioTrack.play();
-                            
-                            // 添加远程成员到列表
                             addMember(user.uid, false, remoteAudioTrack);
                             updateMembersDisplay();
-                            console.log(`已订阅远程用户 ${user.uid} 的音频`);
                         }
-                    } catch (subscribeErr) {
-                        console.error("订阅远程用户失败：", subscribeErr);
-                    }
+                    } catch (subscribeErr) { console.error("订阅远程用户失败：", subscribeErr); }
                 });
-                
-                // 监听用户取消发布
                 rtcClient.on("user-unpublished", (user, mediaType) => {
                     const member = pageManager.callPageState.members.get(user.uid.toString());
-                    if (member && !member.isLocal) {
-                        member.isMuted = true;
-                        updateMembersDisplay();
-                        console.log(`用户 ${user.uid} 已关闭麦克风`);
-                    }
+                    if (member && !member.isLocal) { member.isMuted = true; updateMembersDisplay(); }
                 });
-                
-                // 监听用户离开频道
-                rtcClient.on("user-left", (user) => {
-                    removeMember(user.uid);
-                    updateMembersDisplay();
-                    console.log(`用户 ${user.uid} 已离开频道`);
-                });
-                
-                // 监听用户重新发布媒体流
+                rtcClient.on("user-left", (user) => { removeMember(user.uid); updateMembersDisplay(); });
                 rtcClient.on("user-published", async (user, mediaType) => {
                     if (mediaType === "audio" && pageManager.callPageState.members.has(user.uid.toString())) {
                         try {
                             await rtcClient.subscribe(user, mediaType);
                             const remoteAudioTrack = user.audioTrack;
                             remoteAudioTrack.play();
-                            
                             const member = pageManager.callPageState.members.get(user.uid.toString());
-                            if (member) {
-                                member.audioTrack = remoteAudioTrack;
-                                member.isMuted = false;
-                                updateMembersDisplay();
-                                console.log(`用户 ${user.uid} 重新开启麦克风`);
-                            }
-                        } catch (subscribeErr) {
-                            console.error("重新订阅用户失败：", subscribeErr);
-                        }
+                            if (member) { member.audioTrack = remoteAudioTrack; member.isMuted = false; updateMembersDisplay(); }
+                        } catch (subscribeErr) { console.error("重新订阅用户失败：", subscribeErr); }
                     }
                 });
-                
-            } catch (initErr) {
-                console.error("客户端初始化失败：", initErr);
-                throw initErr;
-            }
+            } catch (initErr) { console.error("客户端初始化失败：", initErr); throw initErr; }
         }
         
-        // 创建麦克风音频轨道
         async function createMicrophoneAudioTrack() {
             try {
-                // 使用浏览器默认麦克风，启用音频处理
-                return await AgoraRTC.createMicrophoneAudioTrack({
-                    encoderConfig: 'music_standard',
-                    AEC: true,  // 回声消除
-                    ANS: true,  // 噪声抑制
-                    AGC: true   // 自动增益控制
-                });
-            } catch (error) {
-                console.error('创建麦克风音频轨道失败:', error);
-                throw error;
-            }
+                return await AgoraRTC.createMicrophoneAudioTrack({ encoderConfig: 'music_standard', AEC: true, ANS: true, AGC: true });
+            } catch (error) { console.error('创建麦克风音频轨道失败:', error); throw error; }
         }
         
-        // 添加成员
         function addMember(uid, isLocal = false, audioTrack = null) {
             if (pageManager.callPageState.members.has(uid.toString())) {
                 const existingMember = pageManager.callPageState.members.get(uid.toString());
-                existingMember.audioTrack = audioTrack;
-                existingMember.isMuted = false;
+                existingMember.audioTrack = audioTrack; existingMember.isMuted = false;
             } else {
-                const member = {
-                    uid: uid,
-                    isLocal: isLocal,
-                    audioTrack: audioTrack,
-                    isMuted: false,
-                    isSpeaking: false
-                };
+                const member = { uid: uid, isLocal: isLocal, audioTrack: audioTrack, isMuted: false, isSpeaking: false };
                 pageManager.callPageState.members.set(uid.toString(), member);
             }
         }
         
-        // 移除成员
-        function removeMember(uid) {
-            pageManager.callPageState.members.delete(uid.toString());
-        }
+        function removeMember(uid) { pageManager.callPageState.members.delete(uid.toString()); }
         
-        // 更新成员显示
         function updateMembersDisplay() {
             const membersListDiv = document.getElementById('membersList');
             const memberCountSpan = document.getElementById('memberCount');
-            
-            if (!membersListDiv || !memberCountSpan) {
-                console.warn('成员列表元素未找到');
-                return;
-            }
-            
+            if (!membersListDiv || !memberCountSpan) return;
             if (pageManager.callPageState.members.size === 0) {
-                membersListDiv.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-user-friends"></i>
-                        <p>频道内暂无成员</p>
-                        <p style="font-size: 11px; margin-top: 5px;">加入频道后，成员列表将在这里显示</p>
-                    </div>
-                `;
-                memberCountSpan.textContent = "0";
-                return;
+                membersListDiv.innerHTML = `<div class="empty-state"><i class="fas fa-user-friends"></i><p>频道内暂无成员</p><p style="font-size: 11px; margin-top: 5px;">加入频道后，成员列表将在这里显示</p></div>`;
+                memberCountSpan.textContent = "0"; return;
             }
-            
             memberCountSpan.textContent = pageManager.callPageState.members.size.toString();
-            
             let membersHTML = "";
-            
             pageManager.callPageState.members.forEach(member => {
-                const isLocal = member.isLocal;
-                const uid = member.uid;
-                
+                const isLocal = member.isLocal; const uid = member.uid;
                 const colors = ['#667eea', '#764ba2', '#4CAF50', '#FF9800', '#E91E63', '#9C27B0'];
                 const colorIndex = parseInt(uid) % colors.length || 0;
-                
-                let statusClass = "status-online";
-                let statusText = "在线";
-                let statusIcon = "fa-circle";
-                
+                let statusClass = "status-online"; let statusText = "在线"; let statusIcon = "fa-circle";
                 let isActuallyMuted = member.isMuted;
-                if (isLocal) {
-                    isActuallyMuted = pageManager.callPageState.isMicrophoneMuted;
-                }
-                
-                if (isActuallyMuted) {
-                    statusClass = "status-muted";
-                    statusText = "已静音";
-                    statusIcon = "fa-microphone-slash";
-                } else if (member.isSpeaking) {
-                    statusClass = "status-speaker";
-                    statusText = "正在发言";
-                    statusIcon = "fa-volume-up";
-                }
-                
+                if (isLocal) isActuallyMuted = pageManager.callPageState.isMicrophoneMuted;
+                if (isActuallyMuted) { statusClass = "status-muted"; statusText = "已静音"; statusIcon = "fa-microphone-slash"; }
+                else if (member.isSpeaking) { statusClass = "status-speaker"; statusText = "正在发言"; statusIcon = "fa-volume-up"; }
                 const muteIcon = isActuallyMuted ? 'fa-microphone-slash' : 'fa-microphone';
                 const muteTitle = isActuallyMuted ? '取消静音' : '静音';
                 const muteBtnClass = isActuallyMuted ? 'mute-btn muted' : 'mute-btn';
-                
-                membersHTML += `
-                    <div class="member-card ${isLocal ? 'local' : ''}">
-                        <div class="avatar ${isLocal ? 'local' : 'remote'}" style="background: ${colors[colorIndex]}">
-                            ${isLocal ? '我' : '用户'}
-                        </div>
-                        <div class="member-info">
-                            <div class="member-name">
-                                ${isLocal ? '我 (本地)' : `用户 ${uid}`}
-                            </div>
-                            <div class="member-uid">UID: ${uid}</div>
-                            <div class="member-status ${statusClass}">
-                                <i class="fas ${statusIcon}"></i>
-                                ${statusText}
-                            </div>
-                        </div>
-                        <div class="member-actions">
-                            <button class="action-btn ${muteBtnClass}" 
-                                    onclick="callPageToggleMemberMute('${uid}')" 
-                                    title="${muteTitle}"
-                                    ${isLocal ? 'disabled' : ''}>
-                                <i class="fas ${muteIcon}"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
+                membersHTML += `<div class="member-card ${isLocal ? 'local' : ''}"><div class="avatar ${isLocal ? 'local' : 'remote'}" style="background: ${colors[colorIndex]}">${isLocal ? '我' : '用户'}</div><div class="member-info"><div class="member-name">${isLocal ? '我 (本地)' : `用户 ${uid}`}</div><div class="member-uid">UID: ${uid}</div><div class="member-status ${statusClass}"><i class="fas ${statusIcon}"></i>${statusText}</div></div><div class="member-actions"><button class="action-btn ${muteBtnClass}" onclick="callPageToggleMemberMute('${uid}')" title="${muteTitle}" ${isLocal ? 'disabled' : ''}><i class="fas ${muteIcon}"></i></button></div></div>`;
             });
-            
             membersListDiv.innerHTML = membersHTML;
         }
         
-        // 切换成员静音（通话页面）
         window.callPageToggleMemberMute = function(uid) {
             const member = pageManager.callPageState.members.get(uid);
             if (!member) return;
-            
-            if (member.isLocal) {
-                toggleMicrophone();
-            } else {
-                if (member.audioTrack) {
-                    if (member.isMuted) {
-                        member.audioTrack.play();
-                    } else {
-                        member.audioTrack.stop();
-                    }
-                    member.isMuted = !member.isMuted;
-                    updateMembersDisplay();
-                }
-            }
+            if (member.isLocal) toggleMicrophone();
+            else { if (member.audioTrack) { if (member.isMuted) member.audioTrack.play(); else member.audioTrack.stop(); member.isMuted = !member.isMuted; updateMembersDisplay(); } }
         };
         
-        // 检测麦克风权限
         async function checkMicPermission() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                stream.getTracks().forEach(track => track.stop());
-                return true;
-            } catch (e) {
-                console.error("麦克风权限失败：", e);
-                throw new Error(`麦克风权限检测失败：${e.message}`);
-            }
+            try { const stream = await navigator.mediaDevices.getUserMedia({ audio: true }); stream.getTracks().forEach(track => track.stop()); return true; }
+            catch (e) { console.error("麦克风权限失败：", e); throw new Error(`麦克风权限检测失败：${e.message}`); }
         }
         
-        // 更新通话状态显示
         function updateCallStatus(status, message) {
-            const callStatusDiv = document.getElementById('callStatus');
-            const statusTextSpan = document.getElementById('statusText');
-            
+            const callStatusDiv = document.getElementById('callStatus'); const statusTextSpan = document.getElementById('statusText');
             if (!callStatusDiv || !statusTextSpan) return;
-            
-            callStatusDiv.style.display = 'block';
-            callStatusDiv.className = 'call-status';
-            
-            if (status === 'connecting') {
-                statusTextSpan.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${message}`;
-            } else if (status === 'connected') {
-                callStatusDiv.classList.add('connected');
-                statusTextSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            } else if (status === 'disconnected') {
-                callStatusDiv.classList.add('disconnected');
-                statusTextSpan.innerHTML = `<i class="fas fa-times-circle"></i> ${message}`;
-            } else if (status === 'error') {
-                callStatusDiv.classList.add('disconnected');
-                statusTextSpan.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-            }
-            
-            if (status === 'connected' || status === 'error') {
-                setTimeout(() => {
-                    if (callStatusDiv && (callStatusDiv.classList.contains('connected') || 
-                         callStatusDiv.classList.contains('disconnected'))) {
-                        callStatusDiv.style.display = 'none';
-                    }
-                }, 5000);
-            }
+            callStatusDiv.style.display = 'block'; callStatusDiv.className = 'call-status';
+            if (status === 'connecting') statusTextSpan.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${message}`;
+            else if (status === 'connected') { callStatusDiv.classList.add('connected'); statusTextSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`; }
+            else if (status === 'disconnected') { callStatusDiv.classList.add('disconnected'); statusTextSpan.innerHTML = `<i class="fas fa-times-circle"></i> ${message}`; }
+            else if (status === 'error') { callStatusDiv.classList.add('disconnected'); statusTextSpan.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`; }
+            if (status === 'connected' || status === 'error') setTimeout(() => { if (callStatusDiv && (callStatusDiv.classList.contains('connected') || callStatusDiv.classList.contains('disconnected'))) callStatusDiv.style.display = 'none'; }, 5000);
         }
         
-        // 切换通话状态（在通话页面）
         async function toggleCall() {
-            const callToggleBtn = document.getElementById('callToggle');
-            const micToggleBtn = document.getElementById('micToggle');
-            
+            const callToggleBtn = document.getElementById('callToggle'); const micToggleBtn = document.getElementById('micToggle');
             if (!callToggleBtn || !micToggleBtn) return;
-            
-            if (pageManager.callPageState.isInCall) {
-                await leaveChannel();
-            } else {
-                // 在通话页面手动加入频道（备用功能）
+            if (pageManager.callPageState.isInCall) await leaveChannel();
+            else {
                 const channelName = document.getElementById('currentChannel').textContent;
-                if (!channelName) {
-                    alert("频道名称未设置！");
-                    return;
-                }
-                
-                const token = document.getElementById('tokenInput') ? 
-                             document.getElementById('tokenInput').value.trim() : '';
-                
-                try {
-                    await joinChannelFromMainPage(channelName, token);
-                } catch (error) {
-                    alert(`加入频道失败: ${error.message}`);
-                }
+                if (!channelName) { alert("频道名称未设置！"); return; }
+                const token = document.getElementById('tokenInput') ? document.getElementById('tokenInput').value.trim() : '';
+                try { await joinChannelFromMainPage(channelName, token); } catch (error) { alert(`加入频道失败: ${error.message}`); }
             }
         }
         
-        // 切换麦克风开关
         function toggleMicrophone() {
             if (!pageManager.callPageState.localAudioTrack) return;
-            
-            const micToggleBtn = document.getElementById('micToggle');
-            const micTextSpan = document.getElementById('micText');
-            
-            if (pageManager.callPageState.isMicrophoneMuted) {
-                pageManager.callPageState.localAudioTrack.setEnabled(true);
-                pageManager.callPageState.isMicrophoneMuted = false;
-                console.log("麦克风已开启");
-            } else {
-                pageManager.callPageState.localAudioTrack.setEnabled(false);
-                pageManager.callPageState.isMicrophoneMuted = true;
-                console.log("麦克风已关闭");
-            }
-            
-            // 更新本地成员状态
+            if (pageManager.callPageState.isMicrophoneMuted) { pageManager.callPageState.localAudioTrack.setEnabled(true); pageManager.callPageState.isMicrophoneMuted = false; }
+            else { pageManager.callPageState.localAudioTrack.setEnabled(false); pageManager.callPageState.isMicrophoneMuted = true; }
             const localMember = Array.from(pageManager.callPageState.members.values()).find(m => m.isLocal);
-            if (localMember) {
-                localMember.isMuted = pageManager.callPageState.isMicrophoneMuted;
-            }
-            
-            updateMembersDisplay();
-            updateCallPageDisplay();
+            if (localMember) localMember.isMuted = pageManager.callPageState.isMicrophoneMuted;
+            updateMembersDisplay(); updateCallPageDisplay();
         }
         
-        // 退出频道
         async function leaveChannel() {
             try {
                 updateCallStatus('connecting', '正在离开频道...');
-                
-                const callToggleBtn = document.getElementById('callToggle');
-                if (callToggleBtn) {
-                    callToggleBtn.disabled = true;
-                }
-                
-                if (pageManager.callPageState.localAudioTrack) {
-                    pageManager.callPageState.localAudioTrack.close();
-                    pageManager.callPageState.localAudioTrack = null;
-                    console.log("本地音频轨道已释放");
-                }
-                
-                if (pageManager.callPageState.rtcClient) {
-                    await pageManager.callPageState.rtcClient.leave();
-                    pageManager.callPageState.rtcClient = null;
-                    console.log("已退出频道");
-                }
-                
-                pageManager.callPageState.members.clear();
-                pageManager.callPageState.isPublished = false;
-                pageManager.callPageState.isMicrophoneMuted = true;
-                pageManager.callPageState.isInCall = false;
-                pageManager.callPageState.currentChannelName = '';
-                pageManager.callPageState.currentUid = null;
-                
-                updateMembersDisplay();
-                updateCallPageDisplay();
-                
-                if (callToggleBtn) {
-                    callToggleBtn.disabled = false;
-                }
-                
+                const callToggleBtn = document.getElementById('callToggle'); if (callToggleBtn) callToggleBtn.disabled = true;
+                if (pageManager.callPageState.localAudioTrack) { pageManager.callPageState.localAudioTrack.close(); pageManager.callPageState.localAudioTrack = null; }
+                if (pageManager.callPageState.rtcClient) { await pageManager.callPageState.rtcClient.leave(); pageManager.callPageState.rtcClient = null; }
+                pageManager.callPageState.members.clear(); pageManager.callPageState.isPublished = false; pageManager.callPageState.isMicrophoneMuted = true; pageManager.callPageState.isInCall = false; pageManager.callPageState.currentChannelName = ''; pageManager.callPageState.currentUid = null;
+                updateMembersDisplay(); updateCallPageDisplay();
+                if (callToggleBtn) callToggleBtn.disabled = false;
                 updateCallStatus('disconnected', '已退出通话');
-                
-            } catch (leaveErr) {
-                console.error("退出频道失败：", leaveErr);
-                updateCallStatus('error', `退出通话失败：${leaveErr.message}`);
-                
-                const callToggleBtn = document.getElementById('callToggle');
-                if (callToggleBtn) {
-                    callToggleBtn.disabled = false;
-                }
-            }
+            } catch (leaveErr) { console.error("退出频道失败：", leaveErr); updateCallStatus('error', `退出通话失败：${leaveErr.message}`); const callToggleBtn = document.getElementById('callToggle'); if (callToggleBtn) callToggleBtn.disabled = false; }
         }
         
-        // ========== TALLY+通话页面功能（二级页面3） ==========
-        // 初始化TALLY+通话页面状态
-        if (!pageManager.tallyCallState) {
-            pageManager.tallyCallState = {
+        // ========== 视频返送页面功能（二级页面4） ==========
+        if (!pageManager.returnPageState) {
+            pageManager.returnPageState = {
                 rtcClient: null,
-                localAudioTrack: null,
-                isPublished: false,
-                isMicrophoneMuted: true,
                 isInCall: false,
-                tallyUrl: '',
-                tallyIframe: null,
-                isTallyInitialized: false,
+                isReceiving: true,
+                remoteUsers: new Map(),
+                subscribedVideoUsers: new Map(),
+                subscribedAudioUsers: new Map(),
                 currentChannelName: '',
                 currentUid: null
             };
         }
         
-        // 初始化TALLY+通话页面
-        function initTallyCallPage() {
-            // 绑定TALLY+通话页面的事件监听器
-            const tallyCallToggleBtn = document.getElementById('tallyCallToggle');
-            const tallyMicToggleBtn = document.getElementById('tallyMicToggle');
+        function initReturnPage() {
+            const returnCallToggle = document.getElementById('returnCallToggle');
+            const returnRemoteToggle = document.getElementById('returnRemoteToggle');
+            const returnVolumeSlider = document.getElementById('returnVolumeSlider');
+            const returnEnterFullscreen = document.getElementById('returnEnterFullscreenBtn');
+            const returnExitFullscreen = document.getElementById('returnExitFullscreenBtn');
+            const returnVideoBox = document.getElementById('returnVideoBox');
             
-            if (tallyCallToggleBtn) {
-                tallyCallToggleBtn.addEventListener('click', toggleTallyCall);
+            if (returnCallToggle) returnCallToggle.addEventListener('click', toggleReturnCall);
+            if (returnRemoteToggle) returnRemoteToggle.addEventListener('click', toggleReturnRemote);
+            if (returnVolumeSlider) {
+                returnVolumeSlider.addEventListener('input', function(e) {
+                    document.getElementById('returnVolumeValue').textContent = e.target.value + '%';
+                    setReturnAudioVolume(parseInt(e.target.value));
+                });
             }
-            
-            if (tallyMicToggleBtn) {
-                tallyMicToggleBtn.addEventListener('click', toggleTallyMicrophone);
+            // 全屏
+            if (returnEnterFullscreen) {
+                returnEnterFullscreen.addEventListener('click', () => {
+                    if (returnVideoBox.requestFullscreen) returnVideoBox.requestFullscreen();
+                    else if (returnVideoBox.webkitRequestFullscreen) returnVideoBox.webkitRequestFullscreen();
+                    else if (returnVideoBox.msRequestFullscreen) returnVideoBox.msRequestFullscreen();
+                });
             }
-            
-            console.log('TALLY+通话页面初始化完成');
-        }
-        
-        // 加入TALLY+通话频道
-        async function joinTallyCallChannel(channelName, token = null) {
-            // 检测麦克风权限
-            const hasMicPerm = await checkMicPermission();
-            if (!hasMicPerm) {
-                throw new Error('麦克风权限被拒绝');
+            if (returnExitFullscreen) {
+                returnExitFullscreen.addEventListener('click', () => {
+                    if (document.exitFullscreen) document.exitFullscreen();
+                    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                    else if (document.msExitFullscreen) document.msExitFullscreen();
+                });
             }
+            document.addEventListener('fullscreenchange', toggleReturnFullscreenButtons);
+            document.addEventListener('webkitfullscreenchange', toggleReturnFullscreenButtons);
+            document.addEventListener('msfullscreenchange', toggleReturnFullscreenButtons);
             
-            try {
-                // 更新通话状态显示
-                updateTallyCallStatus('connecting', '正在加入频道...');
-                
-                // 初始化声网客户端
-                await initTallyCallRtcClient();
-                
-                // 创建麦克风音频轨道
-                const audioTrack = await createMicrophoneAudioTrack();
-                
-                if (!audioTrack || !audioTrack.play) {
-                    throw new Error("音频轨道创建失败");
-                }
-                
-                pageManager.tallyCallState.localAudioTrack = audioTrack;
-                console.log(`TALLY+通话：麦克风音频轨道创建成功`);
-                
-                // 加入频道
-                const uid = await pageManager.tallyCallState.rtcClient.join(APP_ID, channelName, token || null);
-                console.log(`TALLY+通话：加入频道【${channelName}】成功，UID: ${uid}`);
-                
-                pageManager.tallyCallState.currentUid = uid;
-                pageManager.tallyCallState.currentChannelName = channelName;
-                
-                // 发布音频
-                await pageManager.tallyCallState.rtcClient.publish([pageManager.tallyCallState.localAudioTrack]);
-                pageManager.tallyCallState.isPublished = true;
-                console.log("TALLY+通话：本地音频发布成功");
-                
-                // 默认关闭话筒
-                pageManager.tallyCallState.isMicrophoneMuted = true;
-                pageManager.tallyCallState.localAudioTrack.setEnabled(false);
-                
-                // 设置通话状态
-                pageManager.tallyCallState.isInCall = true;
-                
-                // 更新TALLY+通话页面显示
-                updateTallyCallPageDisplay();
-                
-                // 更新状态显示
-                updateTallyCallStatus('connected', `已加入频道：${channelName} | UID：${uid}`);
-                
-                return uid;
-                
-            } catch (error) {
-                console.error("TALLY+通话：加入/发布失败:", error);
-                
-                // 清理资源
-                if (pageManager.tallyCallState.localAudioTrack) {
-                    pageManager.tallyCallState.localAudioTrack.close();
-                    pageManager.tallyCallState.localAudioTrack = null;
-                }
-                
-                if (pageManager.tallyCallState.rtcClient) {
-                    pageManager.tallyCallState.rtcClient = null;
-                }
-                
-                pageManager.tallyCallState.isPublished = false;
-                pageManager.tallyCallState.isInCall = false;
-                
-                updateTallyCallPageDisplay();
-                updateTallyCallStatus('error', `加入频道失败：${error.message}`);
-                
-                throw error;
-            }
-        }
-        
-        // 更新TALLY+通话页面显示
-        function updateTallyCallPageDisplay() {
-            // 更新按钮状态
-            const tallyCallToggleBtn = document.getElementById('tallyCallToggle');
-            const tallyMicToggleBtn = document.getElementById('tallyMicToggle');
-            const tallyCallTextSpan = document.getElementById('tallyCallText');
-            const tallyMicTextSpan = document.getElementById('tallyMicText');
-            
-            if (tallyCallToggleBtn && tallyCallTextSpan) {
-                if (pageManager.tallyCallState.isInCall) {
-                    tallyCallToggleBtn.classList.add('in-call');
-                    tallyCallTextSpan.textContent = '退出通话';
-                    tallyCallToggleBtn.querySelector('i').className = 'fas fa-phone-slash';
+            function toggleReturnFullscreenButtons() {
+                const enterBtn = document.getElementById('returnEnterFullscreenBtn');
+                const exitBtn = document.getElementById('returnExitFullscreenBtn');
+                if (document.fullscreenElement === returnVideoBox) {
+                    enterBtn.style.display = 'none';
+                    exitBtn.style.display = 'block';
                 } else {
-                    tallyCallToggleBtn.classList.remove('in-call');
-                    tallyCallTextSpan.textContent = '加入通话';
-                    tallyCallToggleBtn.querySelector('i').className = 'fas fa-phone-alt';
-                }
-            }
-            
-            if (tallyMicToggleBtn && tallyMicTextSpan) {
-                tallyMicToggleBtn.disabled = !pageManager.tallyCallState.isInCall;
-                if (pageManager.tallyCallState.isMicrophoneMuted) {
-                    tallyMicTextSpan.textContent = '开启话筒';
-                    tallyMicToggleBtn.classList.remove('muted');
-                    tallyMicToggleBtn.querySelector('i').className = 'fas fa-microphone';
-                } else {
-                    tallyMicTextSpan.textContent = '关闭话筒';
-                    tallyMicToggleBtn.classList.add('muted');
-                    tallyMicToggleBtn.querySelector('i').className = 'fas fa-microphone-slash';
+                    enterBtn.style.display = 'block';
+                    exitBtn.style.display = 'none';
                 }
             }
         }
         
-        // 初始化TALLY+通话客户端
-        async function initTallyCallRtcClient() {
-            if (pageManager.tallyCallState.rtcClient) return;
+        function setReturnConnectionStatus(connected, msg) {
+            const dot = document.getElementById('returnStatusDot');
+            const text = document.getElementById('returnStatusText');
+            if (dot) dot.className = `status-dot ${connected ? 'connected' : ''}`;
+            if (text) text.textContent = msg;
+        }
+        
+        function showReturnCallStatus(className, text) {
+            const div = document.getElementById('returnCallStatus');
+            const span = document.getElementById('returnCallStatusText');
+            if (!div || !span) return;
+            div.className = `call-status ${className}`;
+            div.style.display = 'block';
+            span.innerHTML = text;
+            if (className !== 'connecting') setTimeout(() => { div.style.display = 'none'; }, 5000);
+        }
+        
+        function updateReturnOnlineCount() {
+            const count = pageManager.returnPageState.remoteUsers.size + (pageManager.returnPageState.isInCall ? 1 : 0);
+            document.getElementById('returnOnlineCount').textContent = count;
+            document.getElementById('returnOnlineCount2').textContent = count;
+        }
+        
+        function updateReturnPlaceholder() {
+            const placeholder = document.getElementById('returnPlaceholder');
+            if (!pageManager.returnPageState.isReceiving) {
+                placeholder.style.display = 'flex';
+                placeholder.innerHTML = '<i class="fas fa-eye-slash" style="margin-right: 8px;"></i> 接收已关闭';
+            } else if (pageManager.returnPageState.subscribedVideoUsers.size === 0) {
+                placeholder.style.display = 'flex';
+                placeholder.innerHTML = '等待远端视频...';
+            } else {
+                placeholder.style.display = 'none';
+            }
+        }
+        
+        function setReturnAudioVolume(volume) {
+            volume = Math.min(100, Math.max(0, volume));
+            for (let audioTrack of pageManager.returnPageState.subscribedAudioUsers.values()) {
+                audioTrack.setVolume(volume);
+            }
+        }
+        
+        async function initReturnClient() {
+            if (pageManager.returnPageState.rtcClient) return;
+            const rtcClient = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
+            pageManager.returnPageState.rtcClient = rtcClient;
             
-            try {
-                const rtcClient = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
-                pageManager.tallyCallState.rtcClient = rtcClient;
-                
-                // 监听远程用户加入
-                rtcClient.on("user-published", async (user, mediaType) => {
-                    try {
-                        await rtcClient.subscribe(user, mediaType);
-                        if (mediaType === "audio") {
-                            const remoteAudioTrack = user.audioTrack;
-                            remoteAudioTrack.play();
-                            console.log(`TALLY+通话：已订阅远程用户 ${user.uid} 的音频`);
+            rtcClient.on('user-published', async (user, mediaType) => {
+                if (!pageManager.returnPageState.remoteUsers.has(user.uid)) {
+                    pageManager.returnPageState.remoteUsers.set(user.uid, user);
+                    updateReturnOnlineCount();
+                }
+                if (pageManager.returnPageState.isReceiving) {
+                    await subscribeReturnUserMedia(user, mediaType);
+                }
+            });
+            
+            rtcClient.on('user-unpublished', (user, mediaType) => {
+                if (mediaType === 'video') {
+                    if (pageManager.returnPageState.subscribedVideoUsers.has(user.uid)) {
+                        pageManager.returnPageState.subscribedVideoUsers.delete(user.uid);
+                        if (pageManager.returnPageState.subscribedVideoUsers.size === 0) {
+                            document.getElementById('returnVideo').srcObject = null;
                         }
-                    } catch (subscribeErr) {
-                        console.error("TALLY+通话：订阅远程用户失败：", subscribeErr);
                     }
-                });
-                
-                // 监听用户取消发布
-                rtcClient.on("user-unpublished", (user, mediaType) => {
-                    console.log(`TALLY+通话：用户 ${user.uid} 已关闭麦克风`);
-                });
-                
-                // 监听用户离开频道
-                rtcClient.on("user-left", (user) => {
-                    console.log(`TALLY+通话：用户 ${user.uid} 已离开频道`);
-                });
-                
-            } catch (initErr) {
-                console.error("TALLY+通话：客户端初始化失败：", initErr);
-                throw initErr;
-            }
-        }
-        
-        // 更新TALLY+通话状态显示
-        function updateTallyCallStatus(status, message) {
-            const tallyCallStatusDiv = document.getElementById('tallyCallStatus');
-            const tallyStatusTextSpan = document.getElementById('tallyStatusText');
-            
-            if (!tallyCallStatusDiv || !tallyStatusTextSpan) return;
-            
-            tallyCallStatusDiv.style.display = 'block';
-            tallyCallStatusDiv.className = 'tally-call-status';
-            
-            if (status === 'connecting') {
-                tallyStatusTextSpan.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${message}`;
-            } else if (status === 'connected') {
-                tallyCallStatusDiv.classList.add('connected');
-                tallyStatusTextSpan.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            } else if (status === 'disconnected') {
-                tallyCallStatusDiv.classList.add('disconnected');
-                tallyStatusTextSpan.innerHTML = `<i class="fas fa-times-circle"></i> ${message}`;
-            } else if (status === 'error') {
-                tallyCallStatusDiv.classList.add('disconnected');
-                tallyStatusTextSpan.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-            }
-            
-            if (status === 'connected' || status === 'error') {
-                setTimeout(() => {
-                    if (tallyCallStatusDiv && (tallyCallStatusDiv.classList.contains('connected') || 
-                         tallyCallStatusDiv.classList.contains('disconnected'))) {
-                        tallyCallStatusDiv.style.display = 'none';
-                    }
-                }, 5000);
-            }
-        }
-        
-        // 切换TALLY+通话状态
-        async function toggleTallyCall() {
-            const tallyCallToggleBtn = document.getElementById('tallyCallToggle');
-            const tallyMicToggleBtn = document.getElementById('tallyMicToggle');
-            
-            if (!tallyCallToggleBtn || !tallyMicToggleBtn) return;
-            
-            if (pageManager.tallyCallState.isInCall) {
-                await leaveTallyCallChannel();
-            } else {
-                // 在TALLY+通话页面手动加入频道
-                const channelName = document.getElementById('channelName').value.trim();
-                if (!channelName) {
-                    alert("请在主页面输入频道名称！");
-                    return;
+                } else if (mediaType === 'audio') {
+                    pageManager.returnPageState.subscribedAudioUsers.delete(user.uid);
                 }
-                
-                const token = document.getElementById('tokenInput') ? 
-                             document.getElementById('tokenInput').value.trim() : '';
-                
-                try {
-                    await joinTallyCallChannel(channelName, token);
-                } catch (error) {
-                    alert(`加入频道失败: ${error.message}`);
+                updateReturnPlaceholder();
+            });
+            
+            rtcClient.on('user-left', (user) => {
+                pageManager.returnPageState.remoteUsers.delete(user.uid);
+                pageManager.returnPageState.subscribedVideoUsers.delete(user.uid);
+                pageManager.returnPageState.subscribedAudioUsers.delete(user.uid);
+                if (pageManager.returnPageState.subscribedVideoUsers.size === 0) {
+                    document.getElementById('returnVideo').srcObject = null;
                 }
-            }
+                updateReturnOnlineCount();
+                updateReturnPlaceholder();
+            });
         }
         
-        // 切换TALLY+通话麦克风开关
-        function toggleTallyMicrophone() {
-            if (!pageManager.tallyCallState.localAudioTrack) return;
-            
-            const tallyMicToggleBtn = document.getElementById('tallyMicToggle');
-            const tallyMicTextSpan = document.getElementById('tallyMicText');
-            
-            if (pageManager.tallyCallState.isMicrophoneMuted) {
-                pageManager.tallyCallState.localAudioTrack.setEnabled(true);
-                pageManager.tallyCallState.isMicrophoneMuted = false;
-                console.log("TALLY+通话：麦克风已开启");
-            } else {
-                pageManager.tallyCallState.localAudioTrack.setEnabled(false);
-                pageManager.tallyCallState.isMicrophoneMuted = true;
-                console.log("TALLY+通话：麦克风已关闭");
-            }
-            
-            updateTallyCallPageDisplay();
-        }
-        
-        // 退出TALLY+通话频道
-        async function leaveTallyCallChannel() {
+        async function subscribeReturnUserMedia(user, mediaType) {
             try {
-                updateTallyCallStatus('connecting', '正在离开频道...');
-                
-                const tallyCallToggleBtn = document.getElementById('tallyCallToggle');
-                if (tallyCallToggleBtn) {
-                    tallyCallToggleBtn.disabled = true;
+                await pageManager.returnPageState.rtcClient.subscribe(user, mediaType);
+                if (mediaType === 'video') {
+                    const videoTrack = user.videoTrack;
+                    if (videoTrack) {
+                        pageManager.returnPageState.subscribedVideoUsers.set(user.uid, videoTrack);
+                        videoTrack.play('returnVideo');
+                        updateReturnPlaceholder();
+                    }
+                } else if (mediaType === 'audio') {
+                    const audioTrack = user.audioTrack;
+                    if (audioTrack) {
+                        pageManager.returnPageState.subscribedAudioUsers.set(user.uid, audioTrack);
+                        audioTrack.setVolume(parseInt(document.getElementById('returnVolumeSlider').value));
+                        audioTrack.play().catch(e => {});
+                    }
                 }
-                
-                if (pageManager.tallyCallState.localAudioTrack) {
-                    pageManager.tallyCallState.localAudioTrack.close();
-                    pageManager.tallyCallState.localAudioTrack = null;
-                    console.log("TALLY+通话：本地音频轨道已释放");
-                }
-                
-                if (pageManager.tallyCallState.rtcClient) {
-                    await pageManager.tallyCallState.rtcClient.leave();
-                    pageManager.tallyCallState.rtcClient = null;
-                    console.log("TALLY+通话：已退出频道");
-                }
-                
-                pageManager.tallyCallState.isPublished = false;
-                pageManager.tallyCallState.isMicrophoneMuted = true;
-                pageManager.tallyCallState.isInCall = false;
-                pageManager.tallyCallState.currentChannelName = '';
-                pageManager.tallyCallState.currentUid = null;
-                
-                updateTallyCallPageDisplay();
-                
-                if (tallyCallToggleBtn) {
-                    tallyCallToggleBtn.disabled = false;
-                }
-                
-                updateTallyCallStatus('disconnected', '已退出通话');
-                
-            } catch (leaveErr) {
-                console.error("TALLY+通话：退出频道失败：", leaveErr);
-                updateTallyCallStatus('error', `退出通话失败：${leaveErr.message}`);
-                
-                const tallyCallToggleBtn = document.getElementById('tallyCallToggle');
-                if (tallyCallToggleBtn) {
-                    tallyCallToggleBtn.disabled = false;
-                }
+            } catch (e) {
+                console.error(`订阅用户 ${user.uid} ${mediaType} 失败`, e);
             }
+        }
+        
+        async function unsubscribeAllReturnRemote() {
+            const promises = [];
+            for (let [uid, user] of pageManager.returnPageState.remoteUsers.entries()) {
+                promises.push(pageManager.returnPageState.rtcClient.unsubscribe(user));
+            }
+            await Promise.all(promises);
+            pageManager.returnPageState.subscribedVideoUsers.clear();
+            pageManager.returnPageState.subscribedAudioUsers.clear();
+            document.getElementById('returnVideo').srcObject = null;
+            updateReturnPlaceholder();
+        }
+        
+        async function joinReturnChannel(channelName, token = null) {
+            if (pageManager.returnPageState.isInCall) return;
+            try {
+                setReturnConnectionStatus(true, '连接中...');
+                document.getElementById('returnCallToggle').disabled = true;
+                showReturnCallStatus('connecting', '正在加入频道...');
+                
+                await initReturnClient();
+                pageManager.returnPageState.isReceiving = true;
+                const uid = await pageManager.returnPageState.rtcClient.join(APP_ID, channelName, token || null);
+                pageManager.returnPageState.isInCall = true;
+                pageManager.returnPageState.currentUid = uid;
+                pageManager.returnPageState.currentChannelName = channelName;
+                
+                const callBtn = document.getElementById('returnCallToggle');
+                callBtn.classList.add('in-call');
+                document.getElementById('returnCallText').textContent = '退出频道';
+                callBtn.querySelector('i').className = 'fas fa-phone-slash';
+                
+                document.getElementById('returnRemoteToggle').disabled = false;
+                document.getElementById('returnRemoteText').textContent = '关闭接收';
+                document.getElementById('returnRemoteToggle').classList.remove('remote-off');
+                
+                updateReturnOnlineCount();
+                updateReturnPlaceholder();
+                
+                showReturnCallStatus('connected', `已加入频道 ${channelName}，UID ${uid}`);
+                setReturnConnectionStatus(true, '已连接');
+                document.getElementById('returnCallToggle').disabled = false;
+            } catch (err) {
+                console.error('加入返送失败', err);
+                showReturnCallStatus('disconnected', `加入失败: ${err.message}`);
+                setReturnConnectionStatus(false, '连接失败');
+                document.getElementById('returnCallToggle').disabled = false;
+                if (pageManager.returnPageState.rtcClient) {
+                    try { await pageManager.returnPageState.rtcClient.leave(); } catch(e) {}
+                    pageManager.returnPageState.rtcClient = null;
+                }
+                pageManager.returnPageState.isReceiving = true;
+                pageManager.returnPageState.isInCall = false;
+            }
+        }
+        
+        async function leaveReturnChannel() {
+            try {
+                showReturnCallStatus('connecting', '正在离开频道...');
+                document.getElementById('returnCallToggle').disabled = true;
+                document.getElementById('returnRemoteToggle').disabled = true;
+                
+                if (pageManager.returnPageState.rtcClient) {
+                    await pageManager.returnPageState.rtcClient.leave();
+                    pageManager.returnPageState.rtcClient = null;
+                }
+                pageManager.returnPageState.remoteUsers.clear();
+                pageManager.returnPageState.subscribedVideoUsers.clear();
+                pageManager.returnPageState.subscribedAudioUsers.clear();
+                document.getElementById('returnVideo').srcObject = null;
+                document.getElementById('returnPlaceholder').style.display = 'flex';
+                document.getElementById('returnPlaceholder').innerHTML = '接收已关闭';
+                
+                pageManager.returnPageState.isInCall = false;
+                pageManager.returnPageState.isReceiving = true;
+                
+                const callBtn = document.getElementById('returnCallToggle');
+                callBtn.classList.remove('in-call');
+                document.getElementById('returnCallText').textContent = '加入频道';
+                callBtn.querySelector('i').className = 'fas fa-phone-alt';
+                
+                updateReturnOnlineCount();
+                showReturnCallStatus('disconnected', '已离开频道');
+                setReturnConnectionStatus(true, '已断开');
+                document.getElementById('returnCallToggle').disabled = false;
+            } catch (err) {
+                console.error('离开返送失败', err);
+                document.getElementById('returnCallToggle').disabled = false;
+            }
+        }
+        
+        function toggleReturnCall() {
+            if (pageManager.returnPageState.isInCall) {
+                leaveReturnChannel();
+            } else {
+                const channel = document.getElementById('returnChannelName').value.trim();
+                const token = document.getElementById('returnToken').value.trim();
+                if (!channel) { alert('频道名称不能为空'); return; }
+                joinReturnChannel(channel, token || null);
+            }
+        }
+        
+        async function toggleReturnRemote() {
+            if (!pageManager.returnPageState.isInCall) return;
+            pageManager.returnPageState.isReceiving = !pageManager.returnPageState.isReceiving;
+            const remoteTextSpan = document.getElementById('returnRemoteText');
+            const remoteBtn = document.getElementById('returnRemoteToggle');
+            if (pageManager.returnPageState.isReceiving) {
+                remoteTextSpan.textContent = '关闭接收';
+                remoteBtn.classList.remove('remote-off');
+                for (let [uid, user] of pageManager.returnPageState.remoteUsers.entries()) {
+                    if (user.hasVideo) await subscribeReturnUserMedia(user, 'video');
+                    if (user.hasAudio) await subscribeReturnUserMedia(user, 'audio');
+                }
+            } else {
+                remoteTextSpan.textContent = '开启接收';
+                remoteBtn.classList.add('remote-off');
+                await unsubscribeAllReturnRemote();
+            }
+            updateReturnPlaceholder();
+        }
+        
+        function updateReturnPageDisplay() {
+            const callBtn = document.getElementById('returnCallToggle');
+            const remoteBtn = document.getElementById('returnRemoteToggle');
+            const callText = document.getElementById('returnCallText');
+            const remoteText = document.getElementById('returnRemoteText');
+            if (pageManager.returnPageState.isInCall) {
+                callBtn.classList.add('in-call');
+                callText.textContent = '退出频道';
+                callBtn.querySelector('i').className = 'fas fa-phone-slash';
+                remoteBtn.disabled = false;
+            } else {
+                callBtn.classList.remove('in-call');
+                callText.textContent = '加入频道';
+                callBtn.querySelector('i').className = 'fas fa-phone-alt';
+                remoteBtn.disabled = true;
+            }
+            if (pageManager.returnPageState.isReceiving) {
+                remoteText.textContent = '关闭接收';
+                remoteBtn.classList.remove('remote-off');
+            } else {
+                remoteText.textContent = '开启接收';
+                remoteBtn.classList.add('remote-off');
+            }
+            updateReturnOnlineCount();
+            updateReturnPlaceholder();
         }
         
         // 页面关闭前清理
         window.addEventListener('beforeunload', function(e) {
-            let inCall = false;
-            let message = '';
-            
-            if (pageManager.callPageState.isInCall) {
-                inCall = true;
-                message = '您正在通话中，确定要离开吗？';
-            }
-            
-            if (pageManager.tallyCallState.isInCall) {
-                inCall = true;
-                message = '您正在TALLY+通话中，确定要离开吗？';
-            }
-            
-            if (inCall) {
-                e.returnValue = message;
-                return message;
-            }
+            let inCall = false; let message = '';
+            if (pageManager.callPageState && pageManager.callPageState.isInCall) { inCall = true; message = '您正在通话中，确定要离开吗？'; }
+            if (pageManager.returnPageState && pageManager.returnPageState.isInCall) { inCall = true; message = '您正在视频返送中，确定要离开吗？'; }
+            if (inCall) { e.returnValue = message; return message; }
         });
         
-        // 页面隐藏时暂停音频
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
-                if (pageManager.callPageState.isInCall) {
-                    console.log('页面进入后台，通话保持中...');
-                }
-                if (pageManager.tallyCallState.isInCall) {
-                    console.log('页面进入后台，TALLY+通话保持中...');
-                }
+                if (pageManager.callPageState && pageManager.callPageState.isInCall) console.log('页面进入后台，通话保持中...');
+                if (pageManager.returnPageState && pageManager.returnPageState.isInCall) console.log('页面进入后台，视频返送保持中...');
             } else {
-                if (pageManager.callPageState.isInCall) {
-                    console.log('页面回到前台');
-                }
-                if (pageManager.tallyCallState.isInCall) {
-                    console.log('页面回到前台');
-                }
+                if (pageManager.callPageState && pageManager.callPageState.isInCall) console.log('页面回到前台');
+                if (pageManager.returnPageState && pageManager.returnPageState.isInCall) console.log('页面回到前台');
             }
         });
         
-        // 让函数在全局可用
         window.toggleCall = toggleCall;
         window.toggleMicrophone = toggleMicrophone;
-        window.toggleTallyCall = toggleTallyCall;
-        window.toggleTallyMicrophone = toggleTallyMicrophone;
     </script>
 </body>
 </html>
