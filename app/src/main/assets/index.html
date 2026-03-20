@@ -605,7 +605,7 @@
         .exit-fullscreen-btn {
             display: none;
         }
-        /* 模拟全屏模式 */
+        /* 模拟全屏模式：固定铺满整个屏幕，视频完整显示（留黑边） */
         .video-box.fullscreen-mode {
             position: fixed;
             top: 0;
@@ -620,7 +620,7 @@
             aspect-ratio: auto;
         }
         .video-box.fullscreen-mode video {
-            object-fit: contain; /* 可改为 cover 以铺满 */
+            object-fit: contain; /* 保持原始比例，完整显示画面，黑边填充 */
         }
         /* 隐藏其他所有页面元素（全屏容器外的部分） */
         .video-box.fullscreen-mode ~ * {
