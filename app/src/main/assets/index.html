@@ -76,7 +76,7 @@
         
         .header h1 {
             color: #333;
-            font-size: 20px;
+            font-size: 28px;   /* 调大标题字体 */
             margin-bottom: 5px;
             font-weight: 700;
         }
@@ -742,7 +742,7 @@
                 border-radius: 12px;
             }
             .header h1 {
-                font-size: 18px;
+                font-size: 24px;  /* 移动端适当缩小，但仍比原来大 */
             }
             .header p {
                 font-size: 11px;
@@ -854,7 +854,8 @@
                 <h3 style="margin-bottom: 15px; font-size: 16px; color: #333;"><i class="fas fa-desktop"></i> TALLY显示</h3>
                 <div class="input-group">
                     <div class="input-field">
-                        <input type="text" id="urlInput" placeholder="输入TALLY显示地址" autocomplete="off">
+                        <!-- 修改 placeholder 提示只输入IP即可 -->
+                        <input type="text" id="urlInput" placeholder="输入IP地址如 192.168.1.100" autocomplete="off">
                     </div>
                 </div>
                 <div class="button-group">
@@ -1111,6 +1112,18 @@
             };
         }
         
+        // 辅助函数：将用户输入补全为完整的 TALLY URL
+        function buildTallyUrl(input) {
+            let raw = input.trim();
+            if (!raw) return '';
+            // 如果已经包含 http:// 或 https://，直接使用
+            if (/^https?:\/\//i.test(raw)) {
+                return raw;
+            }
+            // 否则，视为 IP 地址或域名，自动补全为 http://IP:8082/monitor.html
+            return `http://${raw}:8082/monitor.html`;
+        }
+        
         // 初始化主页面按钮事件
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('joinCallBtn').addEventListener('click', async function() {
@@ -1130,15 +1143,21 @@
                 }
             });
             
+            // 修改 TALLY 按钮逻辑：自动补全 URL
             document.getElementById('showTallyBtn').addEventListener('click', function() {
-                const url = document.getElementById('urlInput').value.trim();
-                if (!url) { alert('请输入TALLY网址！'); return; }
-                try { new URL(url); } catch (e) { alert('请输入有效的网址（包含http://或https://）'); return; }
-                const urlChanged = pageManager.tallyState.url !== url;
-                pageManager.tallyState.url = url;
+                const rawInput = document.getElementById('urlInput').value.trim();
+                if (!rawInput) { alert('请输入服务器IP地址！'); return; }
+                const finalUrl = buildTallyUrl(rawInput);
+                // 简单验证最终 URL 是否有效（检查协议）
+                if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+                    alert('生成的网址无效，请检查输入');
+                    return;
+                }
+                const urlChanged = pageManager.tallyState.url !== finalUrl;
+                pageManager.tallyState.url = finalUrl;
                 showPage('tally-page');
                 if (!pageManager.tallyState.isInitialized || urlChanged) {
-                    setupTallyIframe(url);
+                    setupTallyIframe(finalUrl);
                 } else {
                     const container = document.querySelector('#tally-page .tally-container');
                     const iframe = pageManager.tallyState.iframe;
